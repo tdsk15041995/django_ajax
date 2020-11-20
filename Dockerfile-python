@@ -1,0 +1,13 @@
+From python:3.6
+
+RUN apt-get update &&  apt-get install -y sudo vim 
+
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+
+RUN mkdir -p /home/docker/source
+
+WORKDIR /home/docker/
+
+COPY requirements.txt .
+
+RUN pip install --timeout 1000 -r requirements.txt
