@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from .models import Books
+import json
 
 
 # Create your views here.
@@ -9,7 +10,7 @@ def home(request):
 
     return render(request,'books/index.html')
 
-def ajax(request):
+def save_books(request):
 
     if request.method == "POST":
 
@@ -28,6 +29,26 @@ def ajax(request):
             Books(name=name,price=price,pages=pages).save()
 
             return JsonResponse({'status':200})
+
+def show_books(request):
+
+    if request.method == "GET":
+
+        json_obj = []
+
+        books = Books.objects.all()
+
+        for book in books:
+
+            json_obj.append({
+                'name':book.name,
+                'price':book.price,
+                'pages':book.pages
+            })
+
+        
+
+        return JsonResponse(json.dumps(json_obj),safe=False)
 
 
 

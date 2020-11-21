@@ -9,7 +9,7 @@ $('#save_button').click(function(){
         
         $.ajax({
             type: 'POST',
-            url: '/books/save_book_details/',
+            url: '/books/save_books_details/',
             data:{
                 name : $name.val(),
                 price : $price.val(),
@@ -20,8 +20,6 @@ $('#save_button').click(function(){
             success:function(response){
                 if (response.status == 200){
                     alert("Saved successfully");
- 
-
                 }
                 if (response.status == 400){
                     alert("Book name already taken");
@@ -37,3 +35,20 @@ $('#save_button').click(function(){
         alert("Please fill all the fields");
     }
 });
+
+function showBooks(){
+
+    $.ajax({
+        type: 'GET',
+        url: '/books/show_books_details/',
+        data:{},        
+        dataType: 'json',
+        success:function(response){
+            console.log(response);
+        },
+        error:function(response){
+            alert("nothing was recieved");
+        }
+    });
+    
+}
