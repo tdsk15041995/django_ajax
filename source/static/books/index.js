@@ -42,9 +42,27 @@ function showBooks(){
         type: 'GET',
         url: '/books/show_books_details/',
         data:{},        
-        dataType: 'json',
+        dataType: 'html',
         success:function(response){
-            console.log(response);
+
+            response = eval(response);
+
+            var table = document.getElementById('books-table');
+
+            for(i=0;i<response.length;i++){
+
+                var row = table.insertRow(i+1);
+                var name = row.insertCell(0);
+                var price = row.insertCell(1);
+                var pages = row.insertCell(2);
+
+                name.innerHTML = response[i].name;
+                price.innerHTML = response[i].price;
+                pages.innerHTML = response[i].pages;
+            }
+
+            
+
         },
         error:function(response){
             alert("nothing was recieved");

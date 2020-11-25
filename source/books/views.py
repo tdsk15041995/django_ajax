@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from .models import Books
 import json
-
+from .serializers import BooksSerializer
 
 # Create your views here.
 
@@ -40,15 +40,12 @@ def show_books(request):
 
         for book in books:
 
-            json_obj.append({
-                'name':book.name,
-                'price':book.price,
-                'pages':book.pages
-            })
+            serialized = BooksSerializer(book)
 
+            json_obj.append(serialized.data)
         
 
-        return JsonResponse(json.dumps(json_obj),safe=False)
+        return HttpResponse(json.dumps(json_obj))
 
 
 
